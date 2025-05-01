@@ -1,8 +1,11 @@
 <script setup>
-
+import Swal from 'sweetalert2';
+definePageMeta({
+    layout: '',
+})
 const router = useRouter()
 
-const data = ref({
+const form = reactive({
     email: '',
     password: '',
     rememberMe: false
@@ -10,66 +13,95 @@ const data = ref({
 
 const login = async () => {
     try {
-        // Mock authentication - replace with your actual API call
-        if (data.value.email === 'wannee@gmail.com' && data.value.password === '1234') {
-            // Store token or user data in localStorage if remember me is checked
-            if (data.value.rememberMe) {
-                localStorage.setItem('user', JSON.stringify({
-                    email: data.value.email,
-                    isAuthenticated: true
-                }))
-            }
+        const response = await $fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: form.email,
+                password: form.password
+            })
+        });
+        console.log('Login successful:', response);
+        // ตรวจสอบว่าลงทะเบียนสำเร็จ
+        if (response.status === 200) {
+            // เก็บ token ใน localStorage หรือ cookie ตามที่คุณต้องการ
+            localStorage.setItem('token', response.data.token);
+            // หรือใช้ cookie
+            // document.cookie = `token=${response.data.token}; path=/`;
 
-            // Navigate to dashboard after successful login
-            router.push('/students/')
+            // แสดงข้อความสำเร็จ
+            Swal.fire({
+                icon: 'success',
+                title: 'Login successful!',
+                text: 'Welcome back!',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                router.push('/'); // เปลี่ยนเส้นทางไปยังหน้าแรกหรือหน้าอื่น ๆ ที่คุณต้องการ
+            });
         } else {
-            error.value = 'Invalid email or password'
+            Swal.fire({
+                icon: 'error',
+                title: 'Login failed',
+                text: response.message || 'Unknown error occurred.',
+                confirmButtonText: 'OK'
+            });
         }
-    } catch (e) {
-        error.value = 'An error occurred during login'
-        console.error('Login error:', e)
-    }
-}
 
+        // ทำอะไรต่อเมื่อ login สำเร็จ
+    } catch (error) {
+        console.error('Login failed:', error);
+        alert('Login failed: ' + (error.data?.message || error.message));
+    }
+};
 
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-            <form @submit.prevent="login">
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email</label>
-                    <input type="email" id="email" v-model="email"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required />
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700">Password</label>
-                    <input type="password" id="password" v-model="password"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required />
-                </div>
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center">
-                        <input id="remember-me" type="checkbox" v-model="rememberMe"
-                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                    </div>
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-                    </div>
-                </div>
-                <button type="submit"
-                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Login</h2>
+
+            <UForm :state="form" @submit.prevent="login" class="flex flex-col gap-4 ">
+                <UFormGroup label="Email" name="email" class="">
+                    <p>E-mail</p>
+                    <UInput v-model="form.email" type="email" placeholder="you@example.com" class="w-full" />
+                </UFormGroup>
+
+                <UFormGroup label="Password" name="password">
+                    <p>Password</p>
+                    <UInput v-model="form.password" type="password" placeholder="••••••••" class="w-full" />
+                </UFormGroup>
+
+                <UButton type="submit" color="primary" block :loading="isLoading" >
                     Login
-                </button>
-            </form>
-            <div class="mt-4 text-center">
-                <span class="text-sm text-gray-600">Don't have an account?</span>
-                <a href="#" class="ml-1 font-medium text-indigo-600 hover:text-indigo-500">Sign up</a>
+                </UButton>
+            </UForm>
+
+            <div class="flex items-center justify-between mt-4 text-sm text-gray-500 dark:text-gray-300">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" v-model="rememberMe" class="form-checkbox text-indigo-600" />
+                    <span class="ml-2">Remember me</span>
+                </label>
+                <a href="#" class="text-indigo-600 hover:underline">Forgot password?</a>
             </div>
+
+            <div class="flex items-center justify-between mt-6 gap-2">
+                <UButton color="secondary" variant="outline" block>
+                    <img src="../assets/img/google.png" alt="Google" class="w-5 h-5 mr-2" />
+                    Google
+                </UButton>
+                <UButton color="secondary" variant="outline" block>
+                    <img src="../assets/img/github-mark.png" alt="GitHub" class="w-5 h-5 mr-2" />
+                    GitHub
+                </UButton>
+            </div>
+
+            <p class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4">
+                Don't have an account?
+                <NuxtLink to="/register" class="text-indigo-600 hover:underline ml-1">Register</NuxtLink>
+            </p>
         </div>
     </div>
 </template>
