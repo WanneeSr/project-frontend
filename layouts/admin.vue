@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <ViewsHeader/>
-        <slot/>
+    <div class="">
+        <ViewsHeader />
+        <div>
+            <ViewsSidebar />
+            <slot />
+        </div>
+
     </div>
 </template>

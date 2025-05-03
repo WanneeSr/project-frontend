@@ -1,20 +1,19 @@
-<script setup>
-        
-        </script>
+<script setup lang="ts">
+import AdminDashboard from '../components/admin/dashboard'
+// import AdminUsersInfo from '~/components/AdminUsersInfo.vue'
+// import AdminCoursesInfo from '~/components/AdminCoursesInfo.vue'
+</script>
+
 <template>
-    <div>
-        <UAccordion type="multiple" :items="items" >
-        <template #header="{ item }">
-          <div class="flex items-center gap-2">
-            <UIcon :icon="item.icon" size="lg" />
-            <span class="text-lg font-semibold">{{ item.title }}</span>
-          </div>
-        </template>
-        <template #content="{ item }">
-          <div class="p-4 bg-gray-100 rounded-md shadow-md">
-            <p>{{ item.content }}</p>
-          </div>
-        </template>
-      </UAccordion>
-    </div>
+  <UAccordion type="multiple">
+    <UAccordionItem label="Dashboard" icon="i-lucide-smile">
+      <AdminDashboard />
+    </UAccordionItem>
+    <!-- <UAccordionItem label="User Management" icon="i-lucide-users">
+      <AdminUsersInfo />
+    </UAccordionItem>
+    <UAccordionItem label="Course Management" icon="i-lucide-book">
+      <AdminCoursesInfo />
+    </UAccordionItem> -->
+  </UAccordion>
 </template>
