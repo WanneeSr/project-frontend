@@ -2,6 +2,7 @@
 import Swal from 'sweetalert2';
 definePageMeta({
     layout: '',
+    middleware: 'auth',
 })
 const router = useRouter()
 

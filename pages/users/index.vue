@@ -1,5 +1,13 @@
 <template>
     <div>
-        this is users page
+        users
     </div>
 </template>
+
+<script setup>
+definePageMeta({
+    // layout: 'admin',
+    middleware: 'auth',
+})
+</script>
+

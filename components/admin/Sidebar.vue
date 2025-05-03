@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="bg-slate-700 w-64 h-full flex flex-col justify-between p-4 text-white">
         <div>
             <div v-for="(item_user, index_user) in users" :key="index_user" class="flex items-center gap-3 mb-4">
@@ -20,6 +20,12 @@
                 </NuxtLink>
             </nav>
         </div>
+    </div>
+</template> -->
+
+<template>
+    <div class="bg-slate-700 w-64 h-full flex flex-col justify-between p-4 text-white">
+        ff
     </div>
 </template>
 
