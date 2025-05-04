@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-gray-100 ">
-        courses
+    <div class="bg-gray-100 h-screen ">
+        <AdminCoursesCard/>
     </div>
 </template>
 
