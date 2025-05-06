@@ -4,6 +4,10 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+definePageMeta({
+    layout: 'user',
+    title:'Profile'
+})
 
 </script>

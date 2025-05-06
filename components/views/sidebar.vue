@@ -63,7 +63,7 @@ onMounted(() => {
     }
 })
 </script>
-<template>
+<!-- <template>
     <div class="min-w-[250px] h-[100vh] bg-white border-r-2 pt-5 px-2">
         <div class="flex w-[250px] flex-col ">
             <nuxt-link to="/admin" class="px-4 py-2 flex items-center hover:bg-gray-200 text-black ali"
@@ -146,7 +146,21 @@ onMounted(() => {
             </UAccordion>
         </div>
     </div>
+</template> -->
+<template>
+<div class="flex flex-col h-screen w-full bg-gray-100 dark:bg-gray-900">
+        <div class="flex flex-row w-full h-full">
+            <div class="w-1/4 bg-white dark:bg-gray-800 shadow-lg p-4">
+                fffff
+            </div>
+            <div class="w-3/4 p-4">
+                
+            </div>
+        </div>
+    </div>
 </template>
+
+
 
 <style scoped>
 .is_expanded {

@@ -80,7 +80,7 @@ onMounted(() => {
         </div>
         <div class="flex gap-5 items-center">
             <UDropdownMenu :items="items" :ui="{ content: '' }">
-                <UButton icon="i-lucide-menu" color="" variant="outline" />
+                <UButton icon="i-lucide-menu"  variant="outline" />
             </UDropdownMenu>
             <!-- <button @click="log_out()" class="text-white rounded-md px-2 py-1 bg-gray-500">Logout</button> -->
         </div>
