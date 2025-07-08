@@ -1,0 +1,12 @@
+python 
+
+n= 10
+m= 20
+print(n+m)
+n= 10
+m= 20
+print(n%m)
+
+
+c
+#include <stdio.h>

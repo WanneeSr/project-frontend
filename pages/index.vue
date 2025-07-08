@@ -2,7 +2,13 @@
 definePageMeta({
     layout: 'home'
 })
-
+let data = [
+    {
+        id: 1,
+        label: 'data1',
+        detail: 'dffffaaa',
+    }
+]
 </script>
 
 <template>
@@ -12,7 +18,9 @@ definePageMeta({
             <div class="bg-slate-600 w-full h-72 py-24">
                 <p class="text-white text-2xl font-semibold text-center ">Wellcome to My Project!</p>
             </div>
-            <card/>
+            <div v-for="(item, index) in data" :key="index">
+                <p>{{ item.detail }}</p>
+            </div>
         </div>
     </div>
 </template>

@@ -11,5 +11,12 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ["@nuxt/ui"],
+  modules: ["@nuxt/ui", "nuxt-monaco-editor"],
+  monacoEditor: {
+    // These are default values:
+    // locale: 'en',
+    componentName: {
+      codeEditor: 'MonacoEditor',
+    }
+  }
 });

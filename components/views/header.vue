@@ -6,7 +6,7 @@ import type { DropdownMenuItem } from '@nuxt/ui';
 
 const router = useRouter()
 
-const user = ref(null)
+const user = ref()
 const role_name = ref('')
 
 const items = ref<DropdownMenuItem[][]>([
@@ -55,12 +55,12 @@ const items = ref<DropdownMenuItem[][]>([
 
 onMounted(() => {
     const token = localStorage.getItem('token')
-    if (token) {
-        const decoded = jwtDecode(token)
-        user.value = decoded
-        const roleMap = { 1: 'นักเรียน', 2: 'อาจารย์', 3: 'แอดมิน' }
-        role_name.value = roleMap[decoded.user_role] || 'ไม่ทราบ'
-    }
+    // if (token) {
+    //     const decoded = jwtDecode(token)
+    //     user.value = decoded
+    //     const roleMap = { 1: 'นักเรียน', 2: 'อาจารย์', 3: 'แอดมิน' }
+    //     role_name.value = roleMap[decoded.user_role] || 'ไม่ทราบ'
+    // }
 })
 </script>
 
@@ -75,7 +75,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="flex gap-5 items-center">
-            <nuxt-link to="/" class="text-white font-bold drop-shadow-md">home</nuxt-link>
+            <nuxt-link to="/" class="text-white font-bold drop-shadow-md">Home</nuxt-link>
             <!-- <nuxt-link to="/user/profile" class="text-white font-bold drop-shadow-md">profileinfo</nuxt-link> -->
         </div>
         <div class="flex gap-5 items-center">

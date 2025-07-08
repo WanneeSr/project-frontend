@@ -7,22 +7,12 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="flex  gap-3">
+    <div class="h-full">
+      admin
       
-      <div class="bg-slate-200 w-1/2 p-4 rounded-lg shadow-md mb-4 ">
-          
-        <p>Overviews</p>            
-
+      <div class="flex flex-rows items-center gap-4 w-72 ">
+        <!-- <img src="/assets/img/eiei.png" >
+        <img src="/assets/img/imaga1.png" class=" "> -->
       </div>
-      <div class="bg-slate-200 w-1/2 p-4 rounded-lg shadow-md mb-4 ">
-          
-        <p>LOGS</p>
-      </div>
-      
-  </div>
-  <div class="flex flex-row gap-3">
-    <div class="bg-slate-200 w-2/3 p-4 rounded-lg shadow-md mb-4">
-        Scoreboard
-      </div>
-  </div>
+    </div>
 </template>
