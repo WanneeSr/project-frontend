@@ -16,46 +16,44 @@ const login = async () => {
     try {
         const response = await $fetch('http://localhost:3001/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 email: form.email,
-                password: form.password
-            })
+                password: form.password, // ยังไม่ใช้งานฝั่ง backend
+            }
         });
-        console.log('Login successful:', response);
-        // ตรวจสอบว่าลงทะเบียนสำเร็จ
-        if (response.status === 200) {
-            // เก็บ token ใน localStorage หรือ cookie ตามที่คุณต้องการ
-            localStorage.setItem('token', response.data.token);
-            // หรือใช้ cookie
-            // document.cookie = `token=${response.data.token}; path=/`;
 
-            // แสดงข้อความสำเร็จ
+        // ตรวจสอบว่า response มี token
+        if (response.token) {
+            localStorage.setItem('token', response.token);
+
             Swal.fire({
                 icon: 'success',
                 title: 'Login successful!',
                 text: 'Welcome back!',
                 confirmButtonText: 'OK'
             }).then(() => {
-                router.push('/'); // เปลี่ยนเส้นทางไปยังหน้าแรกหรือหน้าอื่น ๆ ที่คุณต้องการ
+                router.push('/users');
             });
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Login failed',
-                text: response.message || 'Unknown error occurred.',
+                text: 'Invalid response from server.',
                 confirmButtonText: 'OK'
             });
         }
-
-        // ทำอะไรต่อเมื่อ login สำเร็จ
     } catch (error) {
         console.error('Login failed:', error);
-        alert('Login failed: ' + (error.data?.message || error.message));
+        Swal.fire({
+            icon: 'error',
+            title: 'Login failed',
+            text: error.data?.error || error.message || 'Unknown error occurred.',
+            confirmButtonText: 'OK'
+        });
     }
 };
+
+
 
 </script>
 
@@ -75,7 +73,7 @@ const login = async () => {
                     <UInput v-model="form.password" type="password" placeholder="••••••••" class="w-full" />
                 </UFormGroup>
 
-                <UButton type="submit" color="primary" block :loading="isLoading" >
+                <UButton type="submit" color="primary" block :loading="isLoading">
                     Login
                 </UButton>
             </UForm>

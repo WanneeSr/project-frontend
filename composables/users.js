@@ -1,29 +1,21 @@
 import { jwtDecode } from "jwt-decode";
 
-export const checkToken = () => {
-    if (typeof window !== 'undefined') {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token);
-                const currentTime = Date.now() / 1000; // Current time in seconds
-                if (decodedToken.exp < currentTime) {
-                    localStorage.removeItem('token');
-                    return null;
-                } else {
-                    return decodedToken;
-                }
-            } catch (error) {
-                console.error("Invalid token", error);
-                localStorage.removeItem('token');
-                return null;
-            }
+export function checkToken() {
+    if (typeof window === 'undefined') return { user: null, isLoggedIn: false }
 
-        } else {
-            return null;
+    const token = localStorage.getItem('token')
+    if (!token) return { user: null, isLoggedIn: false }
+
+    try {
+        const decoded = jwtDecode(token)
+        return {
+            user: decoded,         // จะมี .email, .user_id, .role ได้ถ้าอยู่ใน token
+            isLoggedIn: true
         }
+    } catch (e) {
+        return { user: null, isLoggedIn: false }
     }
-};
+}
 
 export const getUsers = async () => {
     // const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;

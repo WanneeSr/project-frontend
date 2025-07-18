@@ -5,11 +5,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
-  },
+  // vite: {
+  //   plugins: [
+  //     tailwindcss(),
+  //   ],
+  // },
 
   modules: ["@nuxt/ui", "nuxt-monaco-editor"],
   monacoEditor: {

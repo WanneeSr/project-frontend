@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { UIcon } from '#components';
+
 
 const items = [
-   
+    {
+        label: 'Dashbord',
+        icon:'i-heroicons-home',
+        to:'/admin'
+    },
     {
         label: 'Courses',
         icon: 'i-heroicons-book-open',
@@ -16,6 +22,16 @@ const items = [
         to:'/admin/users'
     },
     {
+        label: 'ChatGPT',
+        icon:'i-heroicons-cog-8-tooth',
+        to:'/admin/chatgpt'
+    },
+    {
+        label: 'Logs',
+        icon:'i-heroicons-cog-8-tooth',
+        to:'/admin/logs'
+    },
+    {
         label: 'Setting',
         icon:'i-heroicons-cog-8-tooth',
         to:'/admin/setting'
@@ -26,9 +42,12 @@ const items = [
 
 </script>
 <template>
-    <div class="min-w-[250px] h-[100vh] bg-white border-r-2 pt-5 ">
-        <div v-for="item in items"  class="bg-slate-200 w-full text-gray-700 font-medium pt-3 pb-3">
-            <nuxt-link :to="item.to">{{ item.label }}</nuxt-link>
+    <div class="min-w-[250px] h-[100vh] bg-white   ">
+        <div v-for="item in items"  class="bg-white w-full text-gray-700 font-medium  hover:bg-slate-200 ">
+            <nuxt-link :to="item.to" class="py-3 flex flex-rows items-center justify-start px-7 ">
+                <UIcon :name="item.icon" class="py-2"/>
+                <p class="p-3">{{ item.label }}</p>
+            </nuxt-link>
         </div>
        
 
