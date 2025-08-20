@@ -2,10 +2,10 @@
 import Swal from 'sweetalert2';
 definePageMeta({
     layout: '',
-    middleware: 'auth',
+
 })
 const router = useRouter()
-
+const show = ref(false)
 const form = reactive({
     email: '',
     password: '',
@@ -60,30 +60,53 @@ const login = async () => {
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
         <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Login</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center text-violet-700 dark:text-white">Login</h2>
 
             <UForm :state="form" @submit.prevent="login" class="flex flex-col gap-4 ">
                 <UFormGroup label="Email" name="email" class="">
-                    <p>E-mail</p>
+                    <p class="text-violet-700">E-mail</p>
                     <UInput v-model="form.email" type="email" placeholder="you@example.com" class="w-full" />
                 </UFormGroup>
 
                 <UFormGroup label="Password" name="password">
-                    <p>Password</p>
-                    <UInput v-model="form.password" type="password" placeholder="••••••••" class="w-full" />
+                    <p class="text-violet-700">Password</p>
+                    <UInput v-model="form.password" class="w-full" placeholder="Password"
+                        :type="show ? 'text' : 'password'" :ui="{
+                            input: {
+                                slots: {
+                                    compoundVariants: [
+                                        {
+                                            color: 'violet',
+                                            variant: [
+                                                'outline',
+                                                'subtle'
+                                            ],
+                                            class: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet'
+                                        },]
+                                },
+                            },
+                            trailing: 'pe-1'
+                        }">
+                        <template #trailing>
+                            <UButton color="neutral" variant="link" size="sm"
+                                :icon="show ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                                :aria-label="show ? 'Hide password' : 'Show password'" :aria-pressed="show"
+                                aria-controls="password" @click="show = !show" />
+                        </template>
+                    </UInput>
                 </UFormGroup>
 
-                <UButton type="submit" color="primary" block :loading="isLoading">
+                <UButton type="submit" class="bg-linear-to-r from-violet-700 to-violet-500" block :loading="isLoading">
                     Login
                 </UButton>
             </UForm>
 
             <div class="flex items-center justify-between mt-4 text-sm text-gray-500 dark:text-gray-300">
                 <label class="inline-flex items-center">
-                    <input type="checkbox" v-model="rememberMe" class="form-checkbox text-indigo-600" />
+                    <input type="checkbox" v-model="rememberMe" class="form-checkbox text-violet-600" />
                     <span class="ml-2">Remember me</span>
                 </label>
-                <a href="#" class="text-indigo-600 hover:underline">Forgot password?</a>
+                <a href="#" class="text-violet-600 hover:underline">Forgot password?</a>
             </div>
 
             <div class="flex items-center justify-between mt-6 gap-2">
@@ -99,7 +122,7 @@ const login = async () => {
 
             <p class="text-sm text-center text-gray-600 dark:text-gray-400 mt-4">
                 Don't have an account?
-                <NuxtLink to="/register" class="text-indigo-600 hover:underline ml-1">Register</NuxtLink>
+                <NuxtLink to="/register" class="text-violet-600 hover:underline ml-1">Register</NuxtLink>
             </p>
         </div>
     </div>
