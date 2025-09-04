@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="h-screen">
         <Navbar/>
+        <slot/>
     </div>
 </template>
