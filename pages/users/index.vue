@@ -1,12 +1,16 @@
+<script setup lang="ts">
+definePageMeta({
+    layout: 'home',
+})
+</script>
+
 <template>
     <div>
-        users
+        <div  class="bg-violet-400 w-full h-63">
+            
+        </div>
     </div>
 </template>
 
-<script setup>
-definePageMeta({
-    // layout: 'admin',
-})
-</script>
+
 

@@ -3,12 +3,20 @@ const route = useRoute()
 console.log(route.params.id)
 const is_selected = ref([])
 console.log(is_selected.value);
-let course = ref([])
+
+const courses = ref<Course[]>([]);
+
+interface Course {
+    course_id: number;
+    course_title: string;
+    course_detail: string;
+    course_status: number;
+}
 
 const courseData = async () => {
     const { data, status } = await getCourses();
-    course.value = data
-    console.log(course.value);
+    courses.value = data
+    console.log(courses.value);
 
 }
 onMounted(() => {
@@ -19,8 +27,8 @@ onMounted(() => {
 
 
 <template>
-    <div class="bg-white text-slate-600 w-full max-w-md mx-auto p-4 rounded-lg space-y-4 flex ">
-        <div v-for="(item, index) in course" :key="index"
+    <div class="bg-white text-slate-600 w-full max-w-md mx-auto p-4 rounded-lg space-y-4 flex flex-col">
+        <div v-for="(item, index) in courses" :key="index"
             class="border border-gray-200 rounded-md shadow-sm p-4 bg-gray-50 hover:shadow-md transition">
             <h2 class="text-lg font-semibold text-slate-800 mb-2">
                 {{ item.course_title }}

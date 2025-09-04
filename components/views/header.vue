@@ -65,7 +65,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="w-full bg-gray-700 flex p-4 justify-between">
+    <div class="w-full bg-violet-700 flex p-4 justify-between">
         <div class="flex gap-5 items-center">
             <div class="flex items-center border-r-2 border-white pr-5">
                 <img width="130" src="" alt="">
@@ -80,7 +80,7 @@ onMounted(() => {
         </div>
         <div class="flex gap-5 items-center">
             <UDropdownMenu :items="items" :ui="{ content: '' }">
-                <UButton icon="i-lucide-menu"  variant="outline" />
+                <UButton icon="i-lucide-menu"  variant="ghost" />
             </UDropdownMenu>
             <!-- <button @click="log_out()" class="text-white rounded-md px-2 py-1 bg-gray-500">Logout</button> -->
         </div>

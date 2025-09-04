@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   //     tailwindcss(),
   //   ],
   // },
-
+  components: true, // ต้องเปิด
   modules: ["@nuxt/ui", "nuxt-monaco-editor"],
   monacoEditor: {
     // These are default values:
