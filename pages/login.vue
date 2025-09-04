@@ -13,47 +13,57 @@ const form = reactive({
 })
 
 const login = async () => {
-    try {
-        const response = await $fetch('http://localhost:3001/login', {
-            method: 'POST',
-            body: {
-                email: form.email,
-                password: form.password, // ยังไม่ใช้งานฝั่ง backend
-            }
-        });
+  try {
+    const token = localStorage.getItem('token')
+    const res = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password
+      })
+    })
 
-        // ตรวจสอบว่า response มี token
-        if (response.token) {
-            localStorage.setItem('token', response.token);
+    const data = await res.json()
+    console.log("login response:", data)
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Login successful!',
-                text: 'Welcome back!',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                router.push('/users');
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Login failed',
-                text: 'Invalid response from server.',
-                confirmButtonText: 'OK'
-            });
-        }
-    } catch (error) {
-        console.error('Login failed:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Login failed',
-            text: error.data?.error || error.message || 'Unknown error occurred.',
-            confirmButtonText: 'OK'
-        });
+    if (res.ok && data.status === 200 && data.data?.token) {
+      // ✅ เก็บ token
+      if (form.rememberMe) {
+        localStorage.setItem('token', data.data.token)
+      } else {
+        sessionStorage.setItem('token', data.data.token)
+      }
+      localStorage.setItem('token', data.data.token)
+      // ✅ เก็บข้อมูล user (ถ้าอยากใช้ทีหลัง)
+      localStorage.setItem('user', JSON.stringify(data.data))
+
+      Swal.fire({
+        icon: 'success',
+        title: data.message,
+      })
+    //   if(data.data.user.user_role !== 1){
+    //     console.log(data.data.user.user_role);
+        
+        router.go('/users')
+    //   }
+      navigateTo('/admin')
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: data.message || 'Login failed',
+      })
     }
-};
-
-
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Login failed',
+    })
+  }
+}
 
 </script>
 
@@ -110,11 +120,11 @@ const login = async () => {
             </div>
 
             <div class="flex items-center justify-between mt-6 gap-2">
-                <UButton color="secondary" variant="outline" block>
+                <UButton color="primary" variant="outline" block>
                     <img src="../assets/img/google.png" alt="Google" class="w-5 h-5 mr-2" />
                     Google
                 </UButton>
-                <UButton color="secondary" variant="outline" block>
+                <UButton color="primary" variant="outline" block>
                     <img src="../assets/img/github-mark.png" alt="GitHub" class="w-5 h-5 mr-2" />
                     GitHub
                 </UButton>

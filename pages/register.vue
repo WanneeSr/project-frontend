@@ -53,9 +53,9 @@ const register = async () => {
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center text-violet-700">Register</h2>
             <div class="p-4 w-full flex flex-col gap-6">
-                <UForm :state="form" @submit.prevent="register" class="flex flex-col gap-2">
+                <UForm :state="form" @submit.prevent="register" class="flex flex-col gap-2 text-violet-700">
                     <UFormGroup label="First Name" name="first_name">
                         <p>First Name</p>
                         <UInput v-model="form.first_name" placeholder="Enter your first name" class="w-full " />
@@ -82,18 +82,18 @@ const register = async () => {
                     </UFormGroup>
 
                 </UForm>
-                <UButton  @click="register()" type="submit" color="secondary" block>
+                <UButton  @click="register()" type="submit" class="bg-violet-700 hover:bg-violet-500" block>
                     Register
                 </UButton>
             </div>
             <div class="flex items-center justify-between p-4 gap-2">
-                <UButton color="secondary" variant="outline" block>
+                <UButton color="primary" variant="outline" block>
                     <div>
                         <img src="../assets/img/google.png" alt="" class="w-6 h-6" />
                     </div>
                     Google
                 </UButton>
-                <UButton color="secondary" variant="outline" block>
+                <UButton color="primary" variant="outline" block>
                     <div>
                         <img src="../assets/img/github-mark.png" alt="" class="w-6 h-6" />
                     </div>
