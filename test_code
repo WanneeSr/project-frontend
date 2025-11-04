@@ -1,0 +1,17 @@
+let checkToken = [
+    {
+        user_id: 1,
+        token:'student'
+    },
+    {
+        user_id: 2,
+        token:'techer'
+    },
+    {
+        user_id: 1,
+        token:'admin'
+    }
+]
+
+let select_user = ref([])
+console.log(select_user.value[0]);
